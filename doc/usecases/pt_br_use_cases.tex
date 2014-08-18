@@ -8,6 +8,8 @@
 % \usepackage{longtable}
 \usepackage[utf8]{inputenc} 
 \usepackage[brazil]{babel} % Uncomment for portuguese
+\usepackage{tikz}
+\usepackage{tikz-uml}
 
 \sloppy
 
@@ -35,14 +37,7 @@
       \cellcolor[gray]{0.9}
       \textbf{Date} & \cellcolor[gray]{0.9}\textbf{Descrição} & \cellcolor[gray]{0.9}\textbf{Autor(s)}\\ \hline
       \hline
-      \small xx/xx/xxxx & \small <Descrição> & \small <Autor(es)> \\ \hline      
-      \small xx/xx/xxxx &
-      \begin{small}
-        \begin{itemize}
-          \item Exemplo de;
-          \item Revisões em lista;
-        \end{itemize}
-      \end{small} & \small <Autor(es)> \\ \hline 
+      \small 18/08/2014 & \small Document conception & \small João Bittencourt \\ \hline      
     \end{tabular}
   \end{table}
 
@@ -149,7 +144,39 @@
      \item Definir aqui as pós-condições
     \end{itemize}
   
-  \ucdiagram{./pictures/uc_exemple.png}
+  % \ucdiagram{./pictures/uc_exemple.png}
+  %\input{./usecases/processing.tex}
+  \flushleft
+  \begin{tikzpicture} 
+    \begin{umlsystem}[x=0, fill=red!10]{Unidade de Processamento} 
+      \umlusecase{Somar} 
+      \umlusecase[y=-2]{Subtrair} 
+      \umlusecase[y=-4]{Multiplicar} 
+      \umlusecase[y=-6]{Dividir} 
+      \umlusecase[y=-8]{AND Lõgico}
+      \umlusecase[y=-10]{OR Lógico}
+      \umlusecase[y=-12, width=1.5cm]{Processar resultado}   
+      \umlusecase[x=4,y=-3, fill=green!20,width=1cm]{Definir flags} 
+
+      \umlactor[x=-6,y=-6]{Controle} 
+      \umlactor[x=8,y=-12]{LED de dados} 
+      \umlactor[x=8, y=-3]{LED de overflow}   
+
+      \umlassoc{Controle}{usecase-1}
+      \umlassoc{Controle}{usecase-2}
+      \umlassoc{Controle}{usecase-3}
+      \umlassoc{Controle}{usecase-4}
+      \umlassoc{Controle}{usecase-5}
+      \umlassoc{Controle}{usecase-6}
+      \umlassoc{Controle}{usecase-7}
+      \umlassoc{usecase-7}{LED de dados}
+      \umlassoc{usecase-1}{usecase-8}
+      \umlassoc{usecase-2}{usecase-8}
+      \umlassoc{usecase-3}{usecase-8}
+      \umlassoc{usecase-4}{usecase-8}
+      \umlassoc{usecase-8}{LED de overflow}
+    \end{umlsystem} 
+  \end{tikzpicture}  
   
   % descricao do fluxo principal de eventos
   \begin{mainflow}
