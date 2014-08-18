@@ -1,28 +1,31 @@
-% LaTeX definitions for ipPROCESS 2012 documentation style
+% LaTeX definitions for ipPROCESS documentation style
 %
 % Created by João Carlos Nunes Bittencourt, june 2011
-% updated march 2014
+% updated agust 2014
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{ipprocess}[2012/05/01]
+\ProvidesPackage{ipprocess}[2014/08/18]
 
-%\usepackage[brazil]{babel} % Uncomment for portuguese
 %\usepackage[latin1]{inputenc} 
 \usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
 \usepackage{color}
 \usepackage{paralist}
-\usepackage{graphicx,url}
+\usepackage{graphicx}
+\usepackage{url}
+% \usepackage{array}
 \usepackage{array}
-\usepackage{array,ragged2e}
+\usepackage{ragged2e}
+\usepackage{sectsty}
 \usepackage{float}
 \usepackage{placeins}
 \usepackage{subcaption}
 \usepackage{epstopdf}
+%\usepackage[table]{xcolor}
+\RequirePackage{fancyhdr} 
+\usepackage{enumitem} % load this package for custom enumerate items
 
-\usepackage[table]{xcolor}
-\RequirePackage{fancyhdr}
-\usepackage{enumitem} % load the package
 \fancyhf{}
+
 
 \usepackage{endnotes}
 \let\footnote=\endnote
@@ -39,24 +42,19 @@
 \parskip   6pt
 
 \flushbottom
-\renewcommand{\arraystretch}{1.2}
-
-\renewcommand\thesection{\color{gray}\arabic{section}}
-\usepackage{sectsty}
-\sectionfont{\LARGE}
-\subsectionfont{\Large}
-\subsubsectionfont{\normalfont\em}
-\paragraphfont{\large}
+% set table internal padding
+\renewcommand{\arraystretch}{1.5}
 
 % captions
 %\usepackage[font=sf, labelfont={sf,bf}, margin=1cm]{caption}
-\RequirePackage[font=normalsize, labelfont={sf,bf}, margin=1cm]{caption}
+\RequirePackage[font={normalsize,bf}, labelfont={sf,bf,color=gray}, margin=1cm]{caption}
 %\setlength{\captionmargin}{0.8cm}
-\renewcommand{\captionfont}{\color{gray}\bfseries}
+%\renewcommand{\captionfont}{\color{gray}\bfseries}
 %\renewcommand{\captionlabeldelim}{.}
 
 % font
-\usepackage[scaled]{helvet}
+\usepackage{libertine}
+%\usepackage[scaled]{helvet}
 \renewcommand*\familydefault{\sfdefault} %% Only if the base font of the document is to be sans serif
 \usepackage[T1]{fontenc}
 
@@ -65,19 +63,11 @@
 \newcommand{\XVIPT}{\@setfontsize\xvipt{16}{20}}
 
 % new commands
-\newcounter{instn}
-\setcounter{instn}{1}
-\newcommand{\instnum}{\arabic{instn}}
-\newcommand{\inst}[1]{\ensuremath{^{#1}}}
-\newcommand{\nextinstitute}{\\\mbox{}\\[-6pt] \addtocounter{instn}{1}\inst{\instnum}}
-\newcommand{\email}[1]{\\\mbox{}\\[-6pt]\footnotesize\texttt{#1}}
-\renewcommand{\and}{, }
-
 \renewcommand\tableofcontents{%
-	\vspace*{1.5cm}
-	\section*{\centering\MakeUppercase\contentsname}%
-	\vspace*{2cm}
-	\@starttoc{toc}%
+  \vspace*{1.5cm}
+  \section*{\centering\MakeUppercase\contentsname}%
+  \vspace*{2cm}
+  \@starttoc{toc}%
 }
 
 % to avoid [...] in the bibliography
@@ -110,6 +100,47 @@
        {\@latex@warning{Empty `thebibliography' environment}}%
       \endlist}
 
+% front cover
+\pagestyle{fancy}
+
+\providecommand{\ipPROCESSDocumentTitle}{}
+\newcommand{\DocumentTitle}[1]{\renewcommand{\ipPROCESSDocumentTitle}{#1}}
+
+\providecommand{\ipPROCESSProject}{}
+\newcommand{\Project}[1]{\renewcommand{\ipPROCESSProject}{#1}}
+
+\providecommand{\ipPROCESSOrganization}{}
+\newcommand{\Organization}[1]{\renewcommand{\ipPROCESSOrganization}{#1}}
+
+\providecommand{\ipPROCESSVersion}{}
+\newcommand{\Version}[1]{\renewcommand{\ipPROCESSVersion}{#1}}
+
+\newcommand{\capa}
+{
+  \begin{titlepage}
+    \vspace*{9cm}
+    \begin{figure}[h]
+      \begin{flushright}
+        \includegraphics[width=0.4\linewidth]{pictures/ipprocess.png}
+      \end{flushright}
+    \end{figure}
+    \begin{flushright}
+      \uppercase{\textbf{\ipPROCESSDocumentTitle}}\par
+      \ipPROCESSProject \par
+      \vspace*{3.5cm}
+      \ipPROCESSOrganization \par
+      \textbf{\ipPROCESSVersion} \par
+    \end{flushright}
+    \vspace*{4cm}
+    \centering
+  \end{titlepage}
+}
+
+% header and footer
+\rhead{\includegraphics[width=0.7\linewidth]{pictures/header.png}}
+\lfoot{\hrulefill \\ \small\ipPROCESSDocumentTitle}
+\cfoot{\hrulefill \\ \small\centering\textbf{\ipPROCESSOrganization}}
+\rfoot{\hrulefill \\ \small\thepage}
 
 % itens
 %\setlength\leftmargini   {1.27cm}
@@ -136,147 +167,133 @@
               \topsep    0\p@ \@plus\p@\@minus\p@
               \parsep    \z@
               \partopsep \p@ \@plus\z@ \@minus\p@}
-
-              
+% set new spacing
+\newlength{\wideitemsep}
+\setlength{\wideitemsep}{\itemsep}
+\addtolength{\wideitemsep}{10pt}
+\let\olditem\item
+\renewcommand{\item}{\setlength{\itemsep}{\wideitemsep}\olditem}              
 
 % sections
+% set color for section numbering
+\renewcommand\thesection{\color{gray}\arabic{section}}
 \renewcommand\section{\@startsection{section}{1}{\z@}%
                        {-6\p@ \@plus -4\p@ \@minus -4\p@}%
                        {0\p@ \@plus 4\p@ \@minus 4\p@}%
                        {\large\XIIIPT\bfseries\boldmath
-                        \rightskip=\z@ \@plus 8em\pretolerance=10000 }}
+                        \rightskip=\z@ \@plus 8em\pretolerance=10000 \vspace{10pt}}}
 
 \renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
                        {-6\p@ \@plus -4\p@ \@minus -4\p@}%
                        {0\p@ \@plus 4\p@ \@minus 4\p@}%
                        {\normalfont\normalsize\bfseries\boldmath
                         \rightskip=\z@ \@plus 8em\pretolerance=10000 }}
-
-%\renewcommand{\thesection}{\arabic{section}.}
-%\renewcommand{\thesubsection}{\thesection\arabic{subsection}.}
-%\renewcommand{\thesubsubsection}{\thesubsection\arabic{subsubsection}.}
+\subsubsectionfont{\normalfont\em}
+\paragraphfont{\large}
                         
 \RequirePackage{titlesec}
 \titlelabel{\thetitle.\hspace{1ex}}
 %\titleformat*{\subsubsection}{\normalfont\bfseries\sffamily\color{gray}}
 
-% first page
 
-\pagestyle{empty}
+% enumerate custom commands
+% set new counters
+\newcounter{functionali}
+\newcounter{nonfunctionali}
+\newcounter{dependenciesi}
+\newcounter{usecasei}
+%\setcounter{usecasei}{1}
 
-\newcommand{\authortag}[1]{$^{#1}$}
-
-\def\address#1{\gdef\@address{#1}}
-
-\def\@maketitle{\newpage
- %\null % isso dava um espaco extra antes do title
- \begin{center}
-   %\vglue -6pt
-%   \vspace*{12pt}
-\vspace*{-.7cm}
-  {\XVIPT\bf\@title\par}
-   \vglue 6pt plus 3pt minus 3pt
-  {\normalsize
-   \textbf{\begin{tabular}[t]{c}\@author\end{tabular}}\par}
-   \vglue 6pt plus 3pt minus 3pt
-  {\normalsize
-   \begin{tabular}[t]{c}\inst{\instnum}\@address\end{tabular}\par}
-   \vglue 6pt plus 3pt minus 3pt
-   \end{center}\par
-}
-\let\maketitleOLD\maketitle
-\renewcommand{\maketitle}{\maketitleOLD\thispagestyle{empty}}
-
-\renewenvironment{abstract}{%
-      \list{}{\advance\topsep by6pt\relax%\small
-      \leftmargin=0.8cm
-      \labelwidth=\z@
-      \listparindent=\z@
-      \itemindent\listparindent
-      \rightmargin\leftmargin}\item[\hskip\labelsep
-                                    \bfseries\itshape Abstract.]\itshape}%
-      {\endlist}
-
-\newenvironment{resumo}{%
-      \list{}{\advance\topsep by6pt\relax%\small
-      \leftmargin=0.8cm
-      \labelwidth=\z@
-      \listparindent=\z@
-      \itemindent\listparindent
-      \rightmargin\leftmargin}\item[\hskip\labelsep
-                                    \bfseries\itshape Resumo.]\itshape}%
-      {\endlist}
-
-\newcommand{\simpletitle}[1]%
-{%
-	\vspace*{0.5cm}
-	\textbf{#1}
-	\newline
-}%
-      
-\newcommand{\capa}[6]
+\newcommand{\requirement}[3]
 {
+  \item \textbf{#1} \hrule
+  \begin{description}[style=multiline,leftmargin=4cm,font=\normalfont]
+  \item[\textbf{Descri\c{c}\~{a}o:}]  #2
+  \item[\textbf{N\'{i}vel de Prioridade:}] \textbf{#3}
+  \end{description}
+}
 
-	\begin{titlepage}
-	      \vspace*{9cm}
-	      \begin{figure}[h]
-		\begin{flushright}
-		    \includegraphics[width=0.4\linewidth]{pictures/ipprocess.png}
-		\end{flushright}
-	      \end{figure}
-	      \begin{flushright}
-		\uppercase{\textbf{#5}}\par
-		\@title \par
-		\vspace*{3.5cm}
-		#6 \par
-		\textbf{Versão: #1} \par
-	      \end{flushright}
-	      \vspace*{4cm}
-	      \centering
-	     % \textbf{#2, #3}
-	\end{titlepage}
-	
-	\rhead{\includegraphics[width=0.7\linewidth]{pictures/header.png}}
-	\lfoot{\hrulefill \\ \small#4}
-	\cfoot{\hrulefill \\ \small\centering\textbf{#5}}
-	\rfoot{\hrulefill \\ \small\thepage}
+\newcommand{\dependency}[2]
+{
+  \item \textbf{#1} \hrule
+  {#2}
+}
+
+\newcommand{\sfitem}[1]
+{
+  \item \textbf{#1} \hrule
+  \vspace*{0.3cm}
+}
+
+\newcommand{\usecase}[1]
+{
+  \stepcounter{usecasei}
+  \subsection{[UC\arabic{usecasei}] #1}
+}
+
+\newcommand{\actors}
+{
+  \subsubsection*{Atores}
+}
+
+\newcommand{\preconditions}
+{
+  \subsubsection*{Pr\'{e}-condi\c{c}\~{o}es} 
+}
+
+\newcommand{\postconditions}
+{
+  \subsubsection*{P\'{o}s-condi\c{c}\~{o}es} 
+}
+
+\newcommand{\ucdiagram}[1]
+{
+  \subsubsection*{Diagrama de Caso de Uso}
+  \FloatBarrier
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{#1}
+  \end{figure}
 }
 
 \newenvironment{mainflow}
-{\begin{enumerate}
-	\renewcommand{\labelenumi}{\bfseries\color{gray} P\arabic{enumi}. }
+{\subsubsection{Fluxo Principal de Eventos}
+\begin{enumerate}
+  \renewcommand{\labelenumi}{\bfseries\color{gray} P\arabic{enumi}. }
   \setlength{\itemsep}{1pt}
   \setlength{\parskip}{0pt}
   \setlength{\parsep}{0pt}
-  \setlength{\itemindent}{27pt}}
+  \setlength{\itemindent}{25pt}}
 {\end{enumerate}}
 
 \newcommand{\litem}[1]{\item #1\begin{center}\rule{0.8\textwidth}{0.4pt}\end{center}}
 
 \newenvironment{secondaryflow}
-{\begin{enumerate}
-	\renewcommand{\labelenumi}{\bfseries\color{gray} [SF\arabic{enumi}] }
-	\renewcommand{\labelenumii}{\bfseries\color{gray} \arabic{enumii}. }
+{\subsubsection{Fluxo Secundário: Alternativo}
+\begin{enumerate}
+  \renewcommand{\labelenumi}{\bfseries\color{gray} [SF\arabic{enumi}] }
+  \renewcommand{\labelenumii}{\bfseries\color{gray} \arabic{enumii}. }
   \setlength{\itemsep}{1pt}
   \setlength{\parskip}{0pt}
   \setlength{\parsep}{0pt}
-  \setlength{\itemindent}{27pt}}
+  \setlength{\itemindent}{11pt}}
 {\end{enumerate}}
 
 \newenvironment{functional}
-{\begin{enumerate}
-	\renewcommand{\labelenumi}{\bfseries\color{gray} [FR\thesubsection\arabic{enumi}] }
-	\renewcommand{\labelenumii}{\bfseries\color{gray} \arabic{enumi}. }
+{\vspace{15pt}\begin{enumerate}
+  \renewcommand{\labelenumi}{\bfseries\color{gray} [FR\stepcounter{functionali}\arabic{functionali}] }
+  \renewcommand{\labelenumii}{\bfseries\color{gray}\stepcounter{functionali}\arabic{functionali}. }
   \setlength{\itemsep}{15pt}
   \setlength{\parskip}{10pt}
   \setlength{\parsep}{0pt}
-  \setlength{\itemindent}{27pt}}	
+  \setlength{\itemindent}{13pt}}  
 {\end{enumerate}}
 
 \newenvironment{nonfunctional}
-{\begin{enumerate}
-	\renewcommand{\labelenumi}{\bfseries\color{gray} [NFR\arabic{enumi}] }
-	\renewcommand{\labelenumii}{\bfseries\color{gray} \arabic{enumi}. }
+{\vspace{15pt}\begin{enumerate}
+  \setcounter{enumi}{0} % turn it transparent to the writer
+  \renewcommand{\labelenumi}{\bfseries\color{gray} [NFR\stepcounter{nonfunctionali}\arabic{nonfunctionali}] }
+  \renewcommand{\labelenumii}{\bfseries\color{gray}\stepcounter{nonfunctionali}\arabic{nonfunctionali}. }
   \setlength{\itemsep}{15pt}
   \setlength{\parskip}{10pt}
   \setlength{\parsep}{0pt}
@@ -284,9 +301,9 @@
 {\end{enumerate}}
 
 \newenvironment{dependencies}
-{\begin{enumerate}
-	\renewcommand{\labelenumi}{\bfseries\color{gray} [D\arabic{enumi}] }
-	\renewcommand{\labelenumii}{\bfseries\color{gray} \arabic{enumi}. }
+{\vspace{15pt}\begin{enumerate}
+  \renewcommand{\labelenumi}{\bfseries\color{gray} [D\stepcounter{dependenciesi}\arabic{enumi}] }
+  \renewcommand{\labelenumii}{\bfseries\color{gray}\stepcounter{dependenciesi}\arabic{enumi}. }
   \setlength{\itemsep}{15pt}
   \setlength{\parskip}{10pt}
   \setlength{\parsep}{0pt}
