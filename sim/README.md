@@ -10,3 +10,7 @@ Sugere-se a organização dos subdiretórios da seguinte forma.
 - sim/ver (ambiente de verificação);
 - sim/wave (arquivos de saída em forma de onda das ferramentas de simulação);
 - sim/tests (estímulos gerados para realizações dos testes e simulações);
+
+Cabeçalho dos arquivos Verilog de teste *testbenches*
+-----------------------------------------------------
+Cada arquivo de descrição de teste deve usar o padrão de cabeçalho fornecido (HEADER.*).
