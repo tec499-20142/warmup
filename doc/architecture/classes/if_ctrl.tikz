@@ -11,7 +11,7 @@
           - state : reg bit[TBD] \\
           - data\_a\_reg : reg bit[8] \\
           - data\_b\_reg : reg bit[8] \\
-          - operation\_reg : output bit[8]
+          - operation\_reg : output bit[TBD]
         }{ % procedures
           - \underline{<<sequ>> control\_logic()} \\
           - <<sequ>> register\_assignment()
